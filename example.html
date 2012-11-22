@@ -1,0 +1,236 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Table of Contents: Example 1</title>
+<style type="text/css">
+body {font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;font-size: 14px;}
+h1, h2, h3, h4, h5, h6 {color: inherit;font-family: inherit;font-weight: bold;line-height: 20px;margin: 10px 0;}
+h1, h2, h3 {line-height: 40px;}
+h1 {font-size: 38.5px;}
+h2 {font-size: 31.5px;}
+h3 {font-size: 24.5px;}
+h4 {font-size: 17.5px;}
+h5 {font-size: 14px;}
+h6 {font-size: 11.9px;}
+pre {border-radius: 4px;font-size: 13px;line-height: 20px;color: #333;background-color: #F7F7F9;border: 1px solid #E1E1E8;padding: 8px;margin-bottom: 20px;display: inline-block;}
+.header {border-bottom: 1px solid #E1E1E8;}
+/* ==========================================================================
+   Table of contents
+   ========================================================================== */
+.er_toc {float: right;font-size: 10pt;max-width: 35%;padding: 5px 10px;background: #F1F1F1;border: solid 1px #DADADA;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;margin: 0 0 10px 15px;}
+.er_toc ul, .er_toc ol {margin: 0;padding: 0;}
+.er_toc li {padding-top: 5px;list-style: none;}
+.er_toc ul ul,.er_toc ol ol {margin-left: 20px;}
+.er_toc .er_toc_title {display: block;font-weight: bold;border-bottom: 2px solid #ccc;margin-bottom: 5px;}
+.er_toc .er_toc_title_close {color: #CCC;}
+.er_toc .er_toc_title span {display: inline-block;border: 0px solid #fff;width: 0px;overflow: hidden;height: 0px;margin: 0 0 0 3px;}
+.er_toc .er_toc_title_open span {border-width: 0 5px 6px;border-color: #333 #F1F1F1;}
+.er_toc .er_toc_title_close span {border-width: 5px 5px 0px;border-color: #ccc #F1F1F1;}
+a.er_toc_top {display: inline-block;border: 0px solid #fff;width: 0px;overflow: hidden;height: 0px;margin: 0 0 0 5px;border-width: 0 6px 12px;border-color: #999 #fff;}
+a.er_toc_top:hover {border-color: #1982D1 #fff;}
+.er_toc_disc ul, .er_toc_disc ol {margin-left: 20px;}
+.er_toc_disc li {list-style:disc;}
+</style>
+</head>
+<body>
+<div class="header"><h1>Example 1 for erToc</h1></div>
+<div id="example1">
+<h1>Backup site files and database, then sync to dropbox.</h1>
+<h1>===========================================</h1>
+<h2>Description</h2>
+<p>This is a Bash script, for websit manager to backup site files and database, and set the number of days to retain, sync to dropbox.</p>
+<h2>How to use</h2>
+<p>Default working directory of this manual can be modify. </p>
+<pre>/home/backup/</pre>
+<p>Please visit <a href="http://www.everright.cn/bash-script-to-backup-website-databases-and-files-then-sync-to-dropbox.html">this page</a> to view detailed configuration process.</p>
+<h3>Dropbox</h3>
+<h4>Create new account</h4>
+<p><a href="http://db.tt/cyQy5qPp">Click here</a> to open the Dropbox registration page, enter a name, password, email to complete the registration.</p>
+<h4>Setup Dropbox client</h4>
+<p>After registration is complete, you will jump to the Dropbox download page to download the the Dropbox client installation program to install.</p>
+<h4>Apply developers API</h4>
+<p>Open the developers page <a href="https://www.dropbox.com/developers">https://www.dropbox.com/developers</a>, Click "My Apps" on the left to enter the apps list, create a new app, then get the App key and the App secret.</p>
+<h3>Dropbox Uploader</h3>
+<p><a href="https://github.com/andreafabrizi/Dropbox-Uploader">Dropbox Uploader</a> is a BASH script which can be used to upload, download, delete or list files from Dropbox, an online file sharing, synchronization and backup service.</p>
+<h4>Download</h4>
+<pre>curl -o dropbox_uploader.tar.gz https://nodeload.github.com/andreafabrizi/Dropbox-Uploader/tar.gz/master
+tar xvzf dropbox_uploader.tar.gz
+mv Dropbox-Uploader-master/dropbox_uploader.sh ./
+rm -rf Dropbox-Uploader-master dropbox_uploader.tar.gz</pre>
+<h4>Initial configuration</h4>
+<pre>chmod a+x dropbox_uploader.sh
+
+./dropbox_uploader.sh
+
+# App key:
+# App secret:
+# Access level you have chosen, App folder or Full Dropbox [a/f]:
+> Access token
+Setup completed!</pre>
+<p>Dropbox Uploader configuration file will be save in "~/.dropbox_uploader"</p>
+<h3>erBashBackupSyncToDropbox</h3>
+<h4>Download</h4>
+<pre>curl -o erBackup.tar.gz https://github.com/everright/erBashBackupSyncToDropbox/archive/master.tar.gz
+tar xvzf erBackup.tar.gz
+mv erBashBackupSyncToDropbox/erBackup.sh ./
+rm -rf erBashBackupSyncToDropbox erBackup.tar.gz</pre>
+<h4>Configuration</h4>
+<pre>chmod a+x erBackup.sh</pre>
+<p>Edit the bash file, and replace these settings</p>
+<pre>EMAIL_TO="everright.chen@gmail.com" #Your e-mail address, multiple separated by commas
+DROPBOX_DIR="" #Dropbox storage folder, left blank is /
+DROPBOX_UPLOADER="/test/dropbox/dropbox_uploader.sh" #Dropbox Uploader bash script
+BACKUP_SRC="/test/dropbox/files /test/dropbox/test.sh" #Backup files and folders, multiple separated by a space
+BACKUP_DST="/test/dropbox/backup" #Local storage backup folder
+MYSQL_SERVER="localhost" #MySQL Host
+MYSQL_USER="mysqluser" #MySQL Username
+MYSQL_PASS="userpassword" #MySQL Password
+MYSQL_DUMP="/usr/local/mysql5.5.10/bin/mysqldump" #mysqldump command
+DATABASES="wp_everright wp_everright_cn" #Backup databases, multiple separated by a space
+LIMIT_DAYS=7 #The number of days to retain the backup files</pre>
+<h4>Crontab</h4>
+<pre>crontab -e 
+0 0 * * * /bin/bash /home/backup/erBackup.sh&</pre>
+</div>
+<div class="header">
+<h1>Example 2 for erToc</h1>
+<pre>
+startLevel : h2
+tocScroll : false #disable toc item scroll on clicked
+</pre>
+</div>
+<div id="example2">
+<h1>Backup site files and database, then sync to dropbox.</h1>
+<h1>===========================================</h1>
+<h2>Description</h2>
+<p>This is a Bash script, for websit manager to backup site files and database, and set the number of days to retain, sync to dropbox.</p>
+<h2>How to use</h2>
+<p>Default working directory of this manual can be modify. </p>
+<pre>/home/backup/</pre>
+<p>Please visit <a href="http://www.everright.cn/bash-script-to-backup-website-databases-and-files-then-sync-to-dropbox.html">this page</a> to view detailed configuration process.</p>
+<h3>Dropbox</h3>
+<h4>Create new account</h4>
+<p><a href="http://db.tt/cyQy5qPp">Click here</a> to open the Dropbox registration page, enter a name, password, email to complete the registration.</p>
+<h4>Setup Dropbox client</h4>
+<p>After registration is complete, you will jump to the Dropbox download page to download the the Dropbox client installation program to install.</p>
+<h4>Apply developers API</h4>
+<p>Open the developers page <a href="https://www.dropbox.com/developers">https://www.dropbox.com/developers</a>, Click "My Apps" on the left to enter the apps list, create a new app, then get the App key and the App secret.</p>
+<h3>Dropbox Uploader</h3>
+<p><a href="https://github.com/andreafabrizi/Dropbox-Uploader">Dropbox Uploader</a> is a BASH script which can be used to upload, download, delete or list files from Dropbox, an online file sharing, synchronization and backup service.</p>
+<h4>Download</h4>
+<pre>curl -o dropbox_uploader.tar.gz https://nodeload.github.com/andreafabrizi/Dropbox-Uploader/tar.gz/master
+tar xvzf dropbox_uploader.tar.gz
+mv Dropbox-Uploader-master/dropbox_uploader.sh ./
+rm -rf Dropbox-Uploader-master dropbox_uploader.tar.gz</pre>
+<h4>Initial configuration</h4>
+<pre>chmod a+x dropbox_uploader.sh
+
+./dropbox_uploader.sh
+
+# App key:
+# App secret:
+# Access level you have chosen, App folder or Full Dropbox [a/f]:
+> Access token
+Setup completed!</pre>
+<p>Dropbox Uploader configuration file will be save in "~/.dropbox_uploader"</p>
+<h3>erBashBackupSyncToDropbox</h3>
+<h4>Download</h4>
+<pre>curl -o erBackup.tar.gz https://github.com/everright/erBashBackupSyncToDropbox/archive/master.tar.gz
+tar xvzf erBackup.tar.gz
+mv erBashBackupSyncToDropbox/erBackup.sh ./
+rm -rf erBashBackupSyncToDropbox erBackup.tar.gz</pre>
+<h4>Configuration</h4>
+<pre>chmod a+x erBackup.sh</pre>
+<p>Edit the bash file, and replace these settings</p>
+<pre>EMAIL_TO="everright.chen@gmail.com" #Your e-mail address, multiple separated by commas
+DROPBOX_DIR="" #Dropbox storage folder, left blank is /
+DROPBOX_UPLOADER="/test/dropbox/dropbox_uploader.sh" #Dropbox Uploader bash script
+BACKUP_SRC="/test/dropbox/files /test/dropbox/test.sh" #Backup files and folders, multiple separated by a space
+BACKUP_DST="/test/dropbox/backup" #Local storage backup folder
+MYSQL_SERVER="localhost" #MySQL Host
+MYSQL_USER="mysqluser" #MySQL Username
+MYSQL_PASS="userpassword" #MySQL Password
+MYSQL_DUMP="/usr/local/mysql5.5.10/bin/mysqldump" #mysqldump command
+DATABASES="wp_everright wp_everright_cn" #Backup databases, multiple separated by a space
+LIMIT_DAYS=7 #The number of days to retain the backup files</pre>
+<h4>Crontab</h4>
+<pre>crontab -e 
+0 0 * * * /bin/bash /home/backup/erBackup.sh&</pre>
+</div>
+<div class="header">
+<h1>Example 3 for erToc</h1>
+<pre>
+startLevel : h2
+numbered : false #disable numbered
+tocClass : er_toc er_toc_disc
+</pre>
+</div>
+<div id="example3">
+<h1>Backup site files and database, then sync to dropbox.</h1>
+<h1>===========================================</h1>
+<h2>Description</h2>
+<p>This is a Bash script, for websit manager to backup site files and database, and set the number of days to retain, sync to dropbox.</p>
+<h2>How to use</h2>
+<p>Default working directory of this manual can be modify. </p>
+<pre>/home/backup/</pre>
+<p>Please visit <a href="http://www.everright.cn/bash-script-to-backup-website-databases-and-files-then-sync-to-dropbox.html">this page</a> to view detailed configuration process.</p>
+<h3>Dropbox</h3>
+<h4>Create new account</h4>
+<p><a href="http://db.tt/cyQy5qPp">Click here</a> to open the Dropbox registration page, enter a name, password, email to complete the registration.</p>
+<h4>Setup Dropbox client</h4>
+<p>After registration is complete, you will jump to the Dropbox download page to download the the Dropbox client installation program to install.</p>
+<h4>Apply developers API</h4>
+<p>Open the developers page <a href="https://www.dropbox.com/developers">https://www.dropbox.com/developers</a>, Click "My Apps" on the left to enter the apps list, create a new app, then get the App key and the App secret.</p>
+<h3>Dropbox Uploader</h3>
+<p><a href="https://github.com/andreafabrizi/Dropbox-Uploader">Dropbox Uploader</a> is a BASH script which can be used to upload, download, delete or list files from Dropbox, an online file sharing, synchronization and backup service.</p>
+<h4>Download</h4>
+<pre>curl -o dropbox_uploader.tar.gz https://nodeload.github.com/andreafabrizi/Dropbox-Uploader/tar.gz/master
+tar xvzf dropbox_uploader.tar.gz
+mv Dropbox-Uploader-master/dropbox_uploader.sh ./
+rm -rf Dropbox-Uploader-master dropbox_uploader.tar.gz</pre>
+<h4>Initial configuration</h4>
+<pre>chmod a+x dropbox_uploader.sh
+
+./dropbox_uploader.sh
+
+# App key:
+# App secret:
+# Access level you have chosen, App folder or Full Dropbox [a/f]:
+> Access token
+Setup completed!</pre>
+<p>Dropbox Uploader configuration file will be save in "~/.dropbox_uploader"</p>
+<h3>erBashBackupSyncToDropbox</h3>
+<h4>Download</h4>
+<pre>curl -o erBackup.tar.gz https://github.com/everright/erBashBackupSyncToDropbox/archive/master.tar.gz
+tar xvzf erBackup.tar.gz
+mv erBashBackupSyncToDropbox/erBackup.sh ./
+rm -rf erBashBackupSyncToDropbox erBackup.tar.gz</pre>
+<h4>Configuration</h4>
+<pre>chmod a+x erBackup.sh</pre>
+<p>Edit the bash file, and replace these settings</p>
+<pre>EMAIL_TO="everright.chen@gmail.com" #Your e-mail address, multiple separated by commas
+DROPBOX_DIR="" #Dropbox storage folder, left blank is /
+DROPBOX_UPLOADER="/test/dropbox/dropbox_uploader.sh" #Dropbox Uploader bash script
+BACKUP_SRC="/test/dropbox/files /test/dropbox/test.sh" #Backup files and folders, multiple separated by a space
+BACKUP_DST="/test/dropbox/backup" #Local storage backup folder
+MYSQL_SERVER="localhost" #MySQL Host
+MYSQL_USER="mysqluser" #MySQL Username
+MYSQL_PASS="userpassword" #MySQL Password
+MYSQL_DUMP="/usr/local/mysql5.5.10/bin/mysqldump" #mysqldump command
+DATABASES="wp_everright wp_everright_cn" #Backup databases, multiple separated by a space
+LIMIT_DAYS=7 #The number of days to retain the backup files</pre>
+<h4>Crontab</h4>
+<pre>crontab -e 
+0 0 * * * /bin/bash /home/backup/erBackup.sh&</pre>
+</div>
+<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js'></script>
+<script type='text/javascript' src='lib/jquery.erToc.min.js'></script>
+<script type='text/javascript'>
+$(document).ready(function() {
+    $('#example1').erToc({'goTopNode':'#example1', 'startLevel': 'h2', 'numberedSuffix':'. '});
+    $('#example2').erToc({'goTopNode':'#example2', 'startLevel': 'h2', 'tocScroll': false});
+    $('#example3').erToc({'goTopNode':'#example3', 'startLevel': 'h2', 'numbered': false, 'tocClass': 'er_toc er_toc_disc'});
+});
+</script>
+</body>
+</html>
